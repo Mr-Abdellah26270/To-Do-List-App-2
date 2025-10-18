@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبارات تطبيق قائمة المهام</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استيراد ملفات التطبيق الأساسية -->
+    <script src="error-handling.js"></script>
+    <script src="script.js"></script>
+    <!-- استيراد ملف الاختبارات -->
+    <script src="tests.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">اختبارات تطبيق قائمة المهام</h1>
+            <p class="text-gray-600">اختبارات شاملة للتحقق من وظائف التطبيق المختلفة</p>
+        </header>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">تشغيل الاختبارات</h2>
+            <p class="mb-4">انقر على الزر أدناه لتشغيل جميع الاختبارات وعرض النتائج:</p>
+            <button id="run-all-tests" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300">
+                تشغيل جميع الاختبارات
+            </button>
+        </div>
+
+        <div id="test-results-container" class="mt-8">
+            <!-- سيتم ملء هذا القسم بنتائج الاختبارات -->
+        </div>
+
+        <div class="mt-8 text-center">
+            <a href="index.html" class="inline-block bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300">
+                العودة إلى التطبيق
+            </a>
+        </div>
+    </div>
+</body>
+</html>

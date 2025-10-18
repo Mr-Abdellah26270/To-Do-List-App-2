@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List App</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+    <div id="loader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8" style="opacity: 0;">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">قائمة المهام</h1>
+            <p class="text-gray-600">قم بتنظيم مهامك اليومية بسهولة</p>
+        </header>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">إضافة مهمة جديدة</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="task-title" class="block text-sm font-medium text-gray-700">عنوان المهمة</label>
+                    <input type="text" id="task-title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    <p id="title-error" class="text-red-500 text-xs mt-1"></p>
+                </div>
+                <div>
+                    <label for="task-description" class="block text-sm font-medium text-gray-700">وصف المهمة</label>
+                    <textarea id="task-description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                </div>
+                <div>
+                    <label for="task-date" class="block text-sm font-medium text-gray-700">التاريخ</label>
+                    <input type="date" id="task-date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="task-time" class="block text-sm font-medium text-gray-700">الوقت</label>
+                    <input type="time" id="task-time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="task-type" class="block text-sm font-medium text-gray-700">النوع</label>
+                    <select id="task-type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        <option>عام</option>
+                        <option>عمل</option>
+                        <option>شخصي</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="task-priority" class="block text-sm font-medium text-gray-700">الأولوية</label>
+                    <select id="task-priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        <option value="low">منخفضة</option>
+                        <option value="medium">متوسطة</option>
+                        <option value="high">عالية</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <input id="task-alarm" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <label for="task-alarm" class="ml-2 block text-sm text-gray-900">تفعيل المنبه</label>
+                </div>
+            </div>
+            <div class="mt-6">
+                <button id="add-task-btn" class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">إضافة المهمة</button>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex rounded-md shadow-sm">
+                    <button id="show-board-btn" class="view-switcher-btn bg-blue-500 text-white font-semibold py-2 px-4 rounded-r-md">عرض اللوحة</button>
+                    <button id="show-agenda-btn" class="view-switcher-btn bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-l-md">عرض الأجندة</button>
+                </div>
+                <button id="show-notification-settings" class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">إعدادات الإشعارات</button>
+            </div>
+            <div class="relative">
+                <input type="text" id="search-input" placeholder="ابحث عن مهمة..." class="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:border-blue-500">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+            <div class="mt-4">
+                <label for="sort-by" class="block text-sm font-medium text-gray-700">الترتيب حسب</label>
+                <select id="sort-by" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    <option value="default">افتراضي</option>
+                    <option value="date-newest">التاريخ (الأحدث أولاً)</option>
+                    <option value="date-oldest">التاريخ (الأقدم أولاً)</option>
+                    <option value="priority-high">الأولوية (عالية أولاً)</option>
+                    <option value="priority-low">الأولوية (منخفضة أولاً)</option>
+                </select>
+            </div>
+            <div class="mt-4">
+                <button id="advanced-filter-btn" class="w-full bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">خيارات الفلترة المتقدمة</button>
+                <div id="advanced-filter-panel" class="hidden bg-white rounded-lg shadow-lg p-6 mt-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                            <label for="filter-type" class="block text-sm font-medium text-gray-700">النوع</label>
+                            <select id="filter-type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <option value="all">الكل</option>
+                                <option value="عام">عام</option>
+                                <option value="عمل">عمل</option>
+                                <option value="شخصي">شخصي</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="filter-status" class="block text-sm font-medium text-gray-700">الحالة</label>
+                            <select id="filter-status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <option value="all">الكل</option>
+                                <option value="todo">للقيام به</option>
+                                <option value="inprogress">قيد التنفيذ</option>
+                                <option value="done">مكتمل</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="filter-date-from" class="block text-sm font-medium text-gray-700">من تاريخ</label>
+                            <input type="date" id="filter-date-from" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="filter-date-to" class="block text-sm font-medium text-gray-700">إلى تاريخ</label>
+                            <input type="date" id="filter-date-to" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end gap-4">
+                        <button id="apply-filters-btn" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">تطبيق الفلاتر</button>
+                        <button id="reset-filters-btn" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors">إعادة تعيين</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="board-view" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div id="task-board"></div>
+        </div>
+
+        <div id="agenda-view" class="hidden">
+        </div>
+
+        <div id="task-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+                <div id="modal-content"></div>
+                <div class="mt-6 flex justify-end">
+                    <button id="close-modal-btn" class="text-gray-500 hover:text-gray-700">إغلاق</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="notification-settings-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">إعدادات الإشعارات</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <input id="enable-notifications" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="enable-notifications" class="ml-2 block text-sm text-gray-900">تفعيل الإشعارات</label>
+                    </div>
+                    <div>
+                        <label for="reminder-time" class="block text-sm font-medium text-gray-700">وقت التذكير (بالدقائق)</label>
+                        <select id="reminder-time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            <option value="15">15 دقيقة</option>
+                            <option value="30">30 دقيقة</option>
+                            <option value="60">60 دقيقة</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="show-completion-notifications" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="show-completion-notifications" class="ml-2 block text-sm text-gray-900">إظهار إشعارات إتمام المهمة</label>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end gap-4">
+                    <button id="save-notification-settings" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">حفظ الإعدادات</button>
+                    <button id="close-notification-settings" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="error-handling.js"></script>
+    <script src="script.js"></script>
+    <script src="documentation.js"></script>
+    <script src="tests.js"></script>
+</body>
+</html>
